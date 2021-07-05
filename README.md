@@ -58,12 +58,14 @@ function create_empty_eps{
 create_empty_eps
 
 # start SumatraPDF.
-# omit `.exe` of `SumatraPDF.exe` for return process info
-$sumatra_app = Start-Process SumatraPDF -passthru
+# omit `.exe` of `SumatraPDF.exe` for Start-Process to process info.
+$sumatra_app = Start-Process SumatraPDF "$fname.eps" -passthru
 echo $sumatra_app
 
 function run_asy{
-    &'C:\Program Files\Asymptote\asy.exe' "$fname.asy"
+    # `View output` is on by default on Windows, so use `-noV`
+    # https://asymptote.sourceforge.io/FAQ/section9.html#psviewer
+    &'asy.exe' -noV "$fname.asy"
 }
 
 run_asy
